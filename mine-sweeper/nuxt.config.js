@@ -57,4 +57,17 @@ export default {
     host: '0.0.0.0',
     port: 8080,
   },
+
+  // PWA 設定
+  manifest: {
+    name: 'マインスイーパー',
+    short_name: 'マインスイーパー',
+    lang: 'ja',
+    title: 'マインスイーパー',
+    'og-title': 'マインスイーパー',
+    description: '地雷を避けながらマスをすべて開けよう！',
+    'og-description': '地雷を避けながらマスをすべて開けよう！',
+    theme_color: '#333333',
+    background_color: '#ffffff',
+  },
 };
