@@ -263,8 +263,8 @@ export default {
 
     /**
      * 任意のタイルを開けてゲームを始めます。
-     * @params {Number} row 行インデックス
-     * @params {Number} col 列インデックス
+     * @param {Number} row 行インデックス
+     * @param {Number} col 列インデックス
      */
     start (row, col) {
       this.startGame();
@@ -275,8 +275,8 @@ export default {
 
     /**
      * 指定されたタイルに地雷を埋めないようにして地雷を配置します。
-     * @params {Number} row 行インデックス
-     * @params {Number} col 列インデックス
+     * @param {Number} row 行インデックス
+     * @param {Number} col 列インデックス
      */
     putMines (row, col) {
       let putCount = 0;
@@ -331,9 +331,9 @@ export default {
 
     /**
      * 任意のタイルのフラグを更新します。
-     * @params {Number} row 行インデックス
-     * @params {Number} col 列インデックス
-     * @params {Boolean} value フラグを立てるかどうか。指定しなかった場合は反転する
+     * @param {Number} row 行インデックス
+     * @param {Number} col 列インデックス
+     * @param {Boolean} value フラグを立てるかどうか。指定しなかった場合は反転する
      */
     flag ([row, col, value] = []) {
       if (this.isFrozen) {
@@ -346,8 +346,8 @@ export default {
 
     /**
      * 任意のタイルを開けます。
-     * @params {Number} row 行インデックス
-     * @params {Number} col 列インデックス
+     * @param {Number} row 行インデックス
+     * @param {Number} col 列インデックス
      */
     open ([row, col]) {
       if (this.isFrozen || this.tiles[row][col].opened) {
@@ -384,8 +384,8 @@ export default {
 
     /**
      * 指定されたタイルを開き、その周囲8タイルのうち数字が 0 であるタイルを再帰的に開きます。
-     * @params {Number} row 行インデックス
-     * @params {Number} col 列インデックス
+     * @param {Number} row 行インデックス
+     * @param {Number} col 列インデックス
      */
     openRecursive (row, col) {
       if (this.tiles[row][col].opened) {

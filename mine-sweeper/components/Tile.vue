@@ -308,8 +308,8 @@ export default {
   methods: {
     /**
      * スマホ向け: 長押しタップでフラグを立てます。
-     * @params {Number} row 行インデックス
-     * @params {Number} col 列インデックス
+     * @param {Number} row 行インデックス
+     * @param {Number} col 列インデックス
      */
     touchstart ([row, col]) {
       // 一定時間経過後に離されていなければフラグを立てる
