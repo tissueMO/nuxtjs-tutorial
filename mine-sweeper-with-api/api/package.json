@@ -1,0 +1,14 @@
+{
+  "name": "mine-sweeper",
+  "version": "1.0.0",
+  "description": "API Server",
+  "main": "server.js",
+  "author": "tissueMO",
+  "license": "MIT",
+  "devDependencies": {
+    "body-parser": "^1.19.0",
+    "cors": "^2.8.5",
+    "eslint": "^7.16.0",
+    "express": "^4.17.1"
+  }
+}

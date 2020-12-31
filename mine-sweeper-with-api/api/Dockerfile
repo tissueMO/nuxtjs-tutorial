@@ -4,3 +4,5 @@ RUN apk update && \
     yarn install
 
 WORKDIR /app
+
+CMD ["node", "server.js"]

@@ -1,15 +1,12 @@
 module.exports = {
   root: true,
   env: {
-    browser: true,
     node: true,
   },
   parserOptions: {
-    parser: 'babel-eslint',
+    'ecmaVersion': 2019,
   },
   extends: [
-    '@nuxtjs',
-    'plugin:nuxt/recommended',
     'eslint:recommended',
   ],
   rules: {
@@ -20,13 +17,5 @@ module.exports = {
     'no-extra-semi': 'error',
     'no-unexpected-multiline': 'error',
     'no-unreachable': 'error',
-    'vue/html-self-closing': [
-      'error', {
-        'html': {
-          'void': 'any',
-          'normal': 'any',
-        }
-      }
-    ],
   },
-}
+};

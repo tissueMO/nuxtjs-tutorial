@@ -263,77 +263,28 @@ export default {
 
     /**
      * 任意のタイルを開けてゲームを始めます。
-     * @params {Number} row 行インデックス
-     * @params {Number} col 列インデックス
+     * @param {Number} row 行インデックス
+     * @param {Number} col 列インデックス
      */
     start (row, col) {
       this.startGame();
       this.$emit('start');
-      this.putMines(row, col);
-      this.applyNumbers();
-    },
 
-    /**
-     * 指定されたタイルに地雷を埋めないようにして地雷を配置します。
-     * @params {Number} row 行インデックス
-     * @params {Number} col 列インデックス
-     */
-    putMines (row, col) {
-      let putCount = 0;
-
-      while (putCount < this.mineCount) {
-        const x = Math.floor(Math.random() * this.sizeWidth);
-        const y = Math.floor(Math.random() * this.sizeHeight);
-
-        if (!this.tiles[y][x].hasMine && (col !== x || row !== y)) {
-          this.tiles[y][x].hasMine = true;
-          putCount++;
-        }
-      }
-    },
-
-    /**
-     * 現在埋められている地雷の位置関係に基づいて各タイルの数字を埋め込みます。
-     */
-    applyNumbers () {
-      this.tiles.forEach((row, rowIndex) =>
-        row.forEach((col, colIndex) => {
-          if (col.hasMine) {
-            col.number = -1;
-            return;
-          }
-
-          // 周囲8タイルの地雷の数を数える
-          let surroundedMineCount = 0;
-          OFFSET_MATRIX.forEach((r, subRowIndex) =>
-            r.forEach((c, subColIndex) => {
-              const tx = OFFSET_MATRIX[subRowIndex][subColIndex][0];
-              const ty = OFFSET_MATRIX[subRowIndex][subColIndex][1];
-              if (
-                colIndex + tx < 0 ||
-                this.sizeWidth <= colIndex + tx ||
-                rowIndex + ty < 0 ||
-                this.sizeHeight <= rowIndex + ty
-              ) {
-                return;
-              }
-
-              if (this.tiles[rowIndex + ty][colIndex + tx].hasMine) {
-                surroundedMineCount++;
-              }
-            })
-          );
-
-          this.tiles[rowIndex][colIndex].number = surroundedMineCount;
-        })
-      );
+      // APIサーバーから地雷を配置済みの盤面を取得する
+      return this.$axios.$post('http://localhost:8081/createTiles', {
+        row,
+        col,
+        width: this.sizeWidth,
+        height: this.sizeHeight,
+        mineCount: this.mineCount,
+      });
     },
 
     /**
      * 任意のタイルのフラグを更新します。
-     * @params {Number} row 行インデックス
-     * @params {Number} col 列インデックス
-     * @params {Boolean} value フラグを立てるかどうか。指定しなかった場合は反転する
+     * @param {Number} row 行インデックス
+     * @param {Number} col 列インデックス
+     * @param {Boolean} value フラグを立てるかどうか。指定しなかった場合は反転する
      */
     flag ([row, col, value] = []) {
       if (this.isFrozen) {
@@ -346,17 +297,17 @@ export default {
 
     /**
      * 任意のタイルを開けます。
-     * @params {Number} row 行インデックス
-     * @params {Number} col 列インデックス
+     * @param {Number} row 行インデックス
+     * @param {Number} col 列インデックス
      */
-    open ([row, col]) {
+    async open ([row, col]) {
       if (this.isFrozen || this.tiles[row][col].opened) {
         return;
       }
 
       if (!this.isStarted) {
         // 最初のタイルを開く瞬間にゲームを開始する
-        this.start(row, col);
+        this.tiles = await this.start(row, col);
       }
 
       this.openRecursive(row, col);
@@ -384,8 +335,8 @@ export default {
 
     /**
      * 指定されたタイルを開き、その周囲8タイルのうち数字が 0 であるタイルを再帰的に開きます。
-     * @params {Number} row 行インデックス
-     * @params {Number} col 列インデックス
+     * @param {Number} row 行インデックス
+     * @param {Number} col 列インデックス
      */
     openRecursive (row, col) {
       if (this.tiles[row][col].opened) {
